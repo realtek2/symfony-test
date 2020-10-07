@@ -29,3 +29,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    faker.generator:
+        class: Faker\Generator
+
+    App\DataFixtures\AppFixtures:
+        arguments: ['@security.password_encoder', '@faker.generator']
