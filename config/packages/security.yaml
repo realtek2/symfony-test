@@ -11,12 +11,26 @@ security:
             security: false
         main:
             anonymous: true
+            form_login:
+                login_path: login
+                check_path: login
+                remember_me: true
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: index
+                 # use_referer: true # Redirection to 'target_path' is being managed inside the success handler Listener below
+                success_handler: app.authentication_success_handler
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
+            logout:
+                path: logout
+                target: index
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+                always_remember_me: true
+                remember_me_parameter: _remember_me
+                domain: ~
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

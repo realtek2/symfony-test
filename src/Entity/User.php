@@ -10,7 +10,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use DateTime;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass=App\Repository\UserRepository::class)
+ * @ORM\Table(name="user")
+ * @UniqueEntity(fields="email", message="This email is already taken.")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -22,7 +25,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $username;
@@ -136,13 +139,12 @@ class User implements UserInterface
     {
         //
     }
-
-    public function getLastLogin(): ?\DateTimeInterface
+    public function getLastLogin()
     {
         return $this->last_login;
     }
 
-    public function setLastLogin(?\DateTimeInterface $last_login): self
+    public function setLastLogin($last_login): self
     {
         $this->last_login = $last_login;
 
@@ -159,5 +161,13 @@ class User implements UserInterface
         $this->created_at = $created_at;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->created_at = new Datetime();
     }
 }

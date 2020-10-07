@@ -35,4 +35,12 @@ class DefaultController extends AbstractController
     {
         return new Response('Просто! Легко! Прекрасно!');
     }
+
+    /**
+     * @Route("/profile", name="user_profile")
+     */
+    public function profile()
+    {
+        return $this->render('user/profile.html.twig');
+    }
 }
