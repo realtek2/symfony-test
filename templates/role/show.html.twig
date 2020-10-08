@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ role.name }}{% endblock %}
+
+{% block body %}
+ <h1>{{ role.name }}</h1>
+ <hr>
+ <p>{{ role.createdAt|date('d.m.Y') }}</p>
+ <hr>
+ <a href="/roles">Go Back</a>
+{% endblock %}

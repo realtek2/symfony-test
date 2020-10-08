@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,9 +24,9 @@ class Role
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer", length=11)
      */
-    private $display_name;
+    private $salary;
 
     /**
      * @ORM\Column(type="datetime")
@@ -49,14 +50,14 @@ class Role
         return $this;
     }
 
-    public function getDisplayName(): ?string
+    public function getSalary(): ?string
     {
-        return $this->display_name;
+        return $this->salary;
     }
 
-    public function setDisplayName(string $display_name): self
+    public function setSalary(string $salary): self
     {
-        $this->display_name = $display_name;
+        $this->salary = $salary;
 
         return $this;
     }
@@ -71,5 +72,13 @@ class Role
         $this->created_at = $created_at;
 
         return $this;
+    }
+        
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->created_at = new DateTime();
     }
 }
