@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Employee;
-use App\Entity\Role;
 use App\Form\EmployeeType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,11 +16,18 @@ class EmployeeController extends AbstractController
     /**
      * @Route("/employees", name="employees")
      */
-    public function index()
+    public function index(Request $request, PaginatorInterface $paginator)
     {
         $employees = $this->getDoctrine()->getRepository(Employee::class)->findAll();
 
-        return $this->render('employee/index.html.twig', ['employees' => $employees]);
+        $employees = $paginator->paginate(
+            $employees, /* query NOT result */
+        $request->query->getInt('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+        return $this->render('employee/index.html.twig', [
+            'employees' => $employees
+            ]);
     }
 
     /**

@@ -30,6 +30,12 @@
         {% endfor %}
       </tbody>
     </table>
+    <div>
+      {{ knp_pagination_render(employees) }}
+    </div>
+    <div>
+        Employees count: {{ employees.getTotalItemCount }}
+    </div>
   {% else %}
     <p>No employees to display</p>
   {% endif %}

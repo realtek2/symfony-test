@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Company;
 use App\Form\CompanyType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +16,19 @@ class CompanyController extends AbstractController
     /**
      * @Route("/companies", name="companies")
      */
-    public function index()
+    public function index(Request $request, PaginatorInterface $paginator)
     {
         $companies = $this->getDoctrine()->getRepository(Company::class)->findAll();
 
-        return $this->render('company/index.html.twig', ['companies' => $companies]);
+        $companies = $paginator->paginate(
+            $companies, /* query NOT result */
+        $request->query->getInt('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+
+        return $this->render('company/index.html.twig', [
+            'companies' => $companies
+            ]);
     }
 
     /**
