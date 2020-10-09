@@ -3,7 +3,7 @@ App\Entity\User:
         username: 'admin'
         email: 'admin@admin.com'
         password: 'password'
-        roles: '["ROLE_ADMIN"]'
+        roles: [ROLE_ADMIN]
 
 App\Entity\Company:
     company_1:

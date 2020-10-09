@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\DataFixtures\Provider;
 
 use Doctrine\Common\Collections\ArrayCollection;
