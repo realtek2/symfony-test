@@ -6,27 +6,17 @@ use App\Entity\User;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Fidry\AliceDataFixtures\Loader\PurgerLoader;
 
 class AppFixtures extends Fixture
 {
-    private $passwordEncoder;
-
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(PurgerLoader $loader)
     {
-        $this->passwordEncoder = $passwordEncoder;
+        $this->loader = $loader;
     }
-    public function load(ObjectManager $manager)
+
+    public function load(ObjectManager $manager): void
     {
-        $user = new User();
-        $user->setUsername('admin');
-        $user->setEmail('admin@admin.com');
-        $user->setRoles(['ROLE_ADMIN']);
-
-        $password = $this->passwordEncoder->encodePassword($user, 'password');
-        $user->setPassword($password);
-
-        $manager->persist($user);
-        $manager->flush();
+        $this->loader->load([__DIR__ . '/../../fixtures/data.yaml']);
     }
 }

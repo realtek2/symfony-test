@@ -1,0 +1,66 @@
+App\Entity\User:
+    user_1:
+        username: 'admin'
+        email: 'admin@admin.com'
+        password: 'password'
+        roles: '["ROLE_ADMIN"]'
+
+App\Entity\Company:
+    company_1:
+        name: 'Feel IT Services'
+        city: 'Chishinau'
+    company_2:
+        name: 'WebDevelopment'
+        city: 'Iasi'
+    company_3:
+        name: 'Bss-one'
+        city: 'Iasi'
+    company_4:
+        name: 'DevelopmentAid'
+        city: 'Chishinau'
+    company_5:
+        name: 'Pentalog'
+        city: 'Chishinau'
+    company_{6..20}:
+        name: 'Company #<current()>'
+        city: 'City #<current()>'
+
+App\Entity\Role:
+    role_1:
+        name: 'Web Developer'
+        salary: '20000'
+    role_2:
+        name: 'Back-end Developer'
+        salary: '30000'
+    role_3:
+        name: 'Front-end Developer'
+        salary: '25000'
+    role_4:
+        name: 'HR'
+        salary: '20000'
+    role_5:
+        name: 'The one who makes coffee'
+        salary: '10000'
+    role_6:
+        name: 'Cleaner'
+        salary: '500000'
+    role_7:
+        name: 'Team Lead'
+        salary: '100500'
+    role_8:
+        name: 'Yoshi'
+        salary: '1'
+
+App\Entity\Employee:
+    employee_1:
+        name: 'Maxim'
+        last_name: 'Paladi'
+        age: '22'
+        company: '@company_1'
+        role: '<collection([@role_1])>'
+    employee_2:
+        name: 'John'
+        last_name: 'Doe'
+        age: '30'
+        company: '@company_2'
+        role: '<collection([@role_1, @role_2, @role_8, @role_5])>'
