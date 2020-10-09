@@ -29,4 +29,12 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
             ->getQuery()
             ->getOneOrNullResult();
     }
+    public function loadByEmployee()
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.roles = :role_employee')
+            ->setParameter('role_employee', '["ROLE_EMPLOYEE"]')
+            ->getQuery()
+            ->getResult();
+    }
 }

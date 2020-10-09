@@ -31,3 +31,20 @@ if (roles) {
     }
   });
 }
+
+const employees = document.getElementById('employees');
+
+if (employees) {
+  employees.addEventListener('click', e => {
+    console.log('sad');
+    if (e.target.className === 'btn btn-danger delete-employee') {
+      if (confirm('Are you sure?')) {
+        const id = e.target.getAttribute('data-id');
+
+        fetch(`/employee/delete/${id}`, {
+          method: 'DELETE'
+        }).then(res => window.location.reload());
+      }
+    }
+  });
+}

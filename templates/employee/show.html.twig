@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ employee.name }}{% endblock %}
+
+{% block body %}
+ <h1>Employee: {{ employee.name }} {{ employee.lastName }}</h1>
+ <hr>
+ <h1>Age: {{ employee.age }}</h1>
+ <hr>
+ <p>Register Date: {{ employee.createdAt|date('d.m.Y') }}</p>
+ <hr>
+ <a href="/companies">Go Back</a>
+{% endblock %}

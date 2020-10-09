@@ -7,7 +7,8 @@
     <table id="roles" class="table table-striped">
       <thead>
         <tr>
-          <th style="width: 80%">Role Title</th>
+          <th style="width: 40%">Role</th>
+          <th style="width: 40%">Salary</th>
           <th style="width: 20%">Actions</th>
         </tr>
       </thead>
@@ -15,6 +16,7 @@
         {% for role in roles %}
           <tr>
             <td>{{ role.name }}</td>
+            <td>{{ role.salary }}</td>
             <td>
               <a href="/role/{{ role.id }}" class="btn btn-dark">Show</a>
               <a href="/role/update/{{ role.id }}" class="btn btn-light">Edit</a>
@@ -27,8 +29,4 @@
   {% else %}
     <p>No roles to display</p>
   {% endif %}
-{% endblock %}
-
-{% block javascripts %}
-  <script src="/js/main.js"></script>
 {% endblock %}

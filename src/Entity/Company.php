@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=App\Repository\CompanyRepository::class)
@@ -21,11 +24,13 @@ class Company
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $city;
 
@@ -33,6 +38,17 @@ class Company
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $created_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Employee::class, mappedBy="company")
+     */
+    private $employees;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+        $this->employees = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -81,5 +97,36 @@ class Company
     public function onPrePersist()
     {
         $this->created_at = new DateTime();
+    }
+
+    /**
+     * @return Collection|Employee[]
+     */
+    public function getEmployees(): Collection
+    {
+        return $this->employees;
+    }
+
+    public function addEmployee(Employee $employee): self
+    {
+        if (!$this->employees->contains($employee)) {
+            $this->employees[] = $employee;
+            $employee->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmployee(Employee $employee): self
+    {
+        if ($this->employees->contains($employee)) {
+            $this->employees->removeElement($employee);
+            // set the owning side to null (unless already changed)
+            if ($employee->getCompany() === $this) {
+                $employee->setCompany(null);
+            }
+        }
+
+        return $this;
     }
 }

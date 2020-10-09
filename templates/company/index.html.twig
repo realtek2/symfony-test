@@ -7,7 +7,8 @@
     <table id="companies" class="table table-striped">
       <thead>
         <tr>
-          <th style="width: 80%">Company Title</th>
+          <th style="width: 40%">Company Name</th>
+          <th style="width: 40%">City</th>
           <th style="width: 20%">Actions</th>
         </tr>
       </thead>
@@ -15,6 +16,7 @@
         {% for company in companies %}
           <tr>
             <td>{{ company.name }}</td>
+            <td>{{ company.city }}</td>
             <td>
               <a href="/company/{{ company.id }}" class="btn btn-dark">Show</a>
               <a href="/company/update/{{ company.id }}" class="btn btn-light">Edit</a>
@@ -27,8 +29,4 @@
   {% else %}
     <p>No companies to display</p>
   {% endif %}
-{% endblock %}
-
-{% block javascripts %}
-  <script src="/js/main.js"></script>
 {% endblock %}
