@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="employees")
  * @ORM\HasLifecycleCallbacks()
  */
-class Employee
+class Employee implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -158,5 +159,16 @@ class Employee
     public function onPrePersist()
     {
         $this->created_at = new DateTime();
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            "name" => $this->getName(),
+            "age" => $this->getAge(),
+            // "role" => $this->getRole(),
+            "company" => $this->getCompany(),
+            "created_at" => $this->getCreatedAt()
+        ];
     }
 }

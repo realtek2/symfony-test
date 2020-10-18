@@ -6,6 +6,8 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="companies")
  * @ORM\HasLifecycleCallbacks()
  */
-class Company
+class Company implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -128,5 +130,15 @@ class Company
         }
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            "name" => $this->getName(),
+            "city" => $this->getCity(),
+            "created_at" => $this->getCreatedAt(),
+            // "employees" => $this->getEmployees()
+        ];
     }
 }

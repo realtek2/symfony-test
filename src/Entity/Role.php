@@ -7,6 +7,7 @@ use App\Entity\Company;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="roles")
  * @ORM\HasLifecycleCallbacks()
  */
-class Role
+class Role implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -137,5 +138,15 @@ class Role
         }
 
         return $this;
+    }
+    
+    public function jsonSerialize()
+    {
+        return [
+            "name" => $this->getName(),
+            "salary" => $this->getSalary(),
+            "created_at" => $this->getCreatedAt(),
+            // "employees" => $this->getEmployees()
+        ];
     }
 }
